@@ -138,6 +138,7 @@ class Orders with ChangeNotifier {
             ));
         ordersNotConfirmed.add(order);
       }
+      print(ordersNotConfirmed);
       return ordersNotConfirmed;
     } else {
       throw response.body;
