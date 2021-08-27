@@ -106,6 +106,7 @@ class Orders with ChangeNotifier {
           'isDelivered': false,
           'beingDelivered': false,
         }));
+        print(response.body);
     final responseData = json.decode(response.body) as List;
     if (response.statusCode == 200 || response.statusCode == 201) {
       for (var i = 0; i < responseData.length; i++) {
@@ -175,6 +176,8 @@ class Orders with ChangeNotifier {
         'authorization': _token,
       },
     );
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return;
     } else

@@ -1,3 +1,4 @@
+import 'package:adminpanel/widgets/add_copon.dart';
 import 'package:adminpanel/widgets/web_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -23,9 +24,7 @@ class _AccountScreenState extends State<AccountScreen> {
           ),
           Expanded(
             flex: 5,
-            child: Container(
-              color: Colors.blue,
-            ),
+            child: AddCopon(),
           ),
         ],
       ),

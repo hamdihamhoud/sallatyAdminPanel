@@ -241,4 +241,25 @@ class AdminFunctioins with ChangeNotifier {
       throw response.body;
     }
   }
+
+  Future<String> generateCopon(double discountPercentage,String date) async {
+     final url = Uri.parse('$mainUrl/cobone');
+    final response = await http.post(
+      url,
+      headers: {
+        'usertype': 'vendor',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'authorization': _token,
+      },
+      body: json.encode({
+        'discount': discountPercentage,
+          'expiringdate' : date,
+      }),
+    );
+    final responseData = json.decode(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return responseData['code'];
+    } else
+      throw response.body;
+  }
 }

@@ -192,9 +192,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                         width: size.width * 0.3,
                                         height: 35,
                                         child: TextButton(
-                                          onPressed: () {
-                                            ordersProvider
+                                          onPressed: () async {
+                                            await ordersProvider
                                                 .checkAsConfirmed(orders[i].id);
+                                            Navigator.of(context)
+                                                .pushReplacementNamed(
+                                                    OrdersScreen.routeName);
                                           },
                                           child: Text(
                                             "Confirm Order",
@@ -212,9 +215,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                         width: size.width * 0.3,
                                         height: 35,
                                         child: TextButton(
-                                          onPressed: () {
-                                            ordersProvider
+                                          onPressed: () async {
+                                            await ordersProvider
                                                 .deleteOrder(orders[i].id);
+                                            Navigator.of(context)
+                                                .pushReplacementNamed(
+                                                    OrdersScreen.routeName);
                                           },
                                           child: Text(
                                             "Delete Order",
