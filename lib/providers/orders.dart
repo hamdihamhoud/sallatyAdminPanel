@@ -31,7 +31,7 @@ class CartItem {
 
 class Order {
   final String id;
-  final int amount;
+  final double amount;
   final List<CartItem> products;
   final DateTime dateTime;
   final String address;
@@ -93,13 +93,19 @@ class Orders with ChangeNotifier {
   }
 
   Future<List<Order>> getOrdersNotConfirmed() async {
-    List<Order> ordersNotConfirmed = [];
-    final url = Uri.parse('$mainUrl/notConfirmedOrders');
-    final response = await http.get(url, headers: {
-      'usertype': 'vendor',
-      'Content-Type': 'application/json; charset=UTF-8',
-      'authorization': _token,
-    });
+   List<Order> ordersNotConfirmed = [];
+     final url = Uri.parse('$mainUrl/getOrdersByStatus');
+    final response = await http.post(url,
+        headers: {
+          'usertype': 'vendor',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'authorization': _token,
+        },
+        body: json.encode({
+          'isConfirmed': false,
+          'isDelivered': false,
+          'beingDelivered': false,
+        }));
     final responseData = json.decode(response.body) as List;
     if (response.statusCode == 200 || response.statusCode == 201) {
       for (var i = 0; i < responseData.length; i++) {
@@ -108,7 +114,7 @@ class Orders with ChangeNotifier {
         for (var i = 0; i < orderItems.length; i++) {
           final user = await getUserData(orderItems[i]['product_id']['owner']);
           final product = CartItem(
-            id: orderItems[i]['_id'],
+            id: orderItems[i]['product_id']['_id'] + i.toString(),
             productId: orderItems[i]['product_id']['_id'].toString(),
             imageUrl: orderItems[i]['product_id']['images'][0].toString(),
             price:
@@ -132,6 +138,7 @@ class Orders with ChangeNotifier {
             ));
         ordersNotConfirmed.add(order);
       }
+      print(ordersNotConfirmed);
       return ordersNotConfirmed;
     } else {
       throw response.body;

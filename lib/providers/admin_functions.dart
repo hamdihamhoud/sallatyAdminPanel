@@ -74,6 +74,55 @@ class AdminFunctioins with ChangeNotifier {
       throw response.body;
   }
 
+   Future<void> deleteNormal(String normalId) async {
+    final url = Uri.parse('$mainUrl/banAccount/$normalId');
+    final response = await http.delete(url, headers: {
+      'usertype': 'vendor',
+      'Content-Type': 'application/json; charset=UTF-8',
+      'authorization': _token,
+    });
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return;
+    } else
+      throw response.body;
+  }
+
+   Future<void> extendPremium(String email,int years) async {
+    final url = Uri.parse('$mainUrl/deleteDelivery/extendPremium');
+    final response = await http.post(url, headers: {
+      'usertype': 'vendor',
+      'Content-Type': 'application/json; charset=UTF-8',
+      'authorization': _token,
+    },
+    body: json.encode({
+      'email' : email,
+      'expiringDate' : DateTime.now().add(Duration(days: years * 365)).toIso8601String(),
+    })
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return;
+    } else
+      throw response.body;
+  }
+
+     Future<void> createPremium(String email,int years) async {
+    final url = Uri.parse('$mainUrl/premiumUser');
+    final response = await http.post(url, headers: {
+      'usertype': 'vendor',
+      'Content-Type': 'application/json; charset=UTF-8',
+      'authorization': _token,
+    },
+    body: json.encode({
+      'email' : email,
+      'expiringDate' : DateTime.now().add(Duration(days: years * 365)).toIso8601String(),
+    })
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return;
+    } else
+      throw response.body;
+  }
+
   Future<List<UserData>> getAllDeliveryAccounts() async {
     List<UserData> deliveryUsers = [];
     final url = Uri.parse('$mainUrl/getAllDelivaries');
