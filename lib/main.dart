@@ -3,7 +3,7 @@ import 'package:adminpanel/providers/auth.dart';
 import 'package:adminpanel/screens/account_screen.dart';
 import 'package:adminpanel/screens/feedback_screen.dart';
 import 'package:adminpanel/screens/orders_screen.dart';
-import 'package:adminpanel/screens/reports_screen.dart';
+import 'package:adminpanel/screens/delivery_screen.dart';
 import 'package:adminpanel/screens/vendors_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
             ..setToken(auth.token)
             ..setUserId(auth.id),
         ),
-                ChangeNotifierProxyProvider<AuthProvider, AdminFunctioins>(
+        ChangeNotifierProxyProvider<AuthProvider, AdminFunctioins>(
           create: (_) => AdminFunctioins(),
           update: (ctx, auth, orders) => orders
             ..setToken(auth.token)
@@ -83,7 +83,7 @@ class MyApp extends StatelessWidget {
         //  AuthScreen(),
         routes: {
           OrdersScreen.routeName: (ctx) => OrdersScreen(),
-          ReportsScreen.routeName: (ctx) => ReportsScreen(),
+          DeliveryScreen.routeName: (ctx) => DeliveryScreen(),
           VendorsScreen.routeName: (ctx) => VendorsScreen(),
           AccountScreen.routeName: (ctx) => AccountScreen(),
           FeedbackScreen.routeName: (ctx) => FeedbackScreen(),

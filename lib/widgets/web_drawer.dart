@@ -1,7 +1,7 @@
 import 'package:adminpanel/screens/account_screen.dart';
 import 'package:adminpanel/screens/feedback_screen.dart';
 import 'package:adminpanel/screens/orders_screen.dart';
-import 'package:adminpanel/screens/reports_screen.dart';
+import 'package:adminpanel/screens/delivery_screen.dart';
 import 'package:adminpanel/screens/vendors_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -37,6 +37,7 @@ class _WebDrawerState extends State<WebDrawer> {
               });
               Navigator.pushReplacementNamed(context, OrdersScreen.routeName);
             },
+            selectedTileColor: Color(0xFF333333),
           ),
           ListTile(
             selected: selectedIndex == 1 ? true : false,
@@ -48,6 +49,19 @@ class _WebDrawerState extends State<WebDrawer> {
               });
               Navigator.pushReplacementNamed(context, VendorsScreen.routeName);
             },
+            selectedTileColor: Color(0xFF333333),
+          ),
+          ListTile(
+            selected: selectedIndex == 3 ? true : false,
+            leading: Icon(Icons.delivery_dining),
+            title: Text('Delivery'),
+            onTap: () {
+              setState(() {
+                selectedIndex = 3;
+              });
+              Navigator.pushReplacementNamed(context, DeliveryScreen.routeName);
+            },
+            selectedTileColor: Color(0xFF333333),
           ),
           ListTile(
             selected: selectedIndex == 2 ? true : false,
@@ -59,17 +73,7 @@ class _WebDrawerState extends State<WebDrawer> {
               });
               Navigator.pushReplacementNamed(context, FeedbackScreen.routeName);
             },
-          ),
-          ListTile(
-            selected: selectedIndex == 3 ? true : false,
-            leading: Icon(Icons.report_gmailerrorred),
-            title: Text('Report'),
-            onTap: () {
-              setState(() {
-                selectedIndex = 3;
-              });
-              Navigator.pushReplacementNamed(context, ReportsScreen.routeName);
-            },
+            selectedTileColor: Color(0xFF333333),
           ),
           ListTile(
             selected: selectedIndex == 4 ? true : false,
@@ -81,6 +85,7 @@ class _WebDrawerState extends State<WebDrawer> {
               });
               Navigator.pushReplacementNamed(context, AccountScreen.routeName);
             },
+            selectedTileColor: Color(0xFF333333),
           ),
           ListTile(
             selected: selectedIndex == 5 ? true : false,

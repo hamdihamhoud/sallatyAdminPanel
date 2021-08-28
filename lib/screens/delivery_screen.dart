@@ -5,28 +5,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
-class VendorsScreen extends StatefulWidget {
-  static const routeName = '/vendors';
-  VendorsScreen({Key key}) : super(key: key);
+class DeliveryScreen extends StatefulWidget {
+  static const routeName = '/delivery';
+  DeliveryScreen({Key key}) : super(key: key);
 
   @override
-  _VendorsScreenState createState() => _VendorsScreenState();
+  _DeliveryScreenState createState() => _DeliveryScreenState();
 }
 
-class _VendorsScreenState extends State<VendorsScreen> {
-  List<UserData> vendors = [];
+class _DeliveryScreenState extends State<DeliveryScreen> {
+  List<UserData> delivrys = [];
   @override
   Widget build(BuildContext context) {
-    final adminProvider = Provider.of<AdminFunctioins>(context);
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
+    final adminProvider = Provider.of<AdminFunctioins>(context);
     return Scaffold(
       body: Row(
         children: [
           Expanded(
             flex: 1,
             child: WebDrawer(
-              selectedIndex: 1,
+              selectedIndex: 3,
             ),
           ),
           Expanded(
@@ -36,10 +36,10 @@ class _VendorsScreenState extends State<VendorsScreen> {
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting)
                   return Center(child: CircularProgressIndicator());
-                vendors = snapshot.data;
-                if (vendors != null && vendors.length > 0) {
+                delivrys = snapshot.data;
+                if (delivrys != null && delivrys.length > 0) {
                   return ListView.builder(
-                    itemCount: vendors.length,
+                    itemCount: delivrys.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(20),
@@ -63,8 +63,8 @@ class _VendorsScreenState extends State<VendorsScreen> {
                                   color: Colors.red,
                                   icon: Icons.delete,
                                   onTap: () => {
-                                    /*   adminProvider
-                                        .deleteDelivery(vendors[index].id), */
+                                    adminProvider
+                                        .deleteDelivery(delivrys[index].id),
                                   },
                                 ),
                               ),
@@ -93,7 +93,7 @@ class _VendorsScreenState extends State<VendorsScreen> {
                                       ),
                                     ),
                                     Text(
-                                      vendors[index].name,
+                                      delivrys[index].name,
                                       style: TextStyle(
                                         color: Color(0xFF333333),
                                         fontSize: 19,
@@ -111,7 +111,7 @@ class _VendorsScreenState extends State<VendorsScreen> {
                                       ),
                                     ),
                                     Text(
-                                      vendors[index].number,
+                                      delivrys[index].number,
                                       style: TextStyle(
                                         color: Color(0xFF333333),
                                         fontSize: 19,
@@ -135,6 +135,26 @@ class _VendorsScreenState extends State<VendorsScreen> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Center(
+          child: Icon(
+            Icons.add,
+            color: Color(0xFF333333),
+          ),
+        ),
+        backgroundColor: theme.primaryColor,
+        tooltip: 'Add New Delivery Account',
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Container(), /////////// la tzwaed
+              );
+            },
+          );
+        },
       ),
     );
   }
