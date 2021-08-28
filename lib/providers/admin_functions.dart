@@ -42,6 +42,7 @@ class AdminFunctioins with ChangeNotifier {
 
   Future<void> createDelivery(
       String name, String email, String password, String number) async {
+
     final url = Uri.parse('$mainUrl/delivaryUser');
     final response = await http.post(url,
         headers: {
@@ -142,6 +143,29 @@ class AdminFunctioins with ChangeNotifier {
         deliveryUsers.add(user);
       }
       return deliveryUsers;
+    } else
+      throw response.body;
+  }
+
+  Future<List<UserData>> getAllPremiumAccounts() async {
+    List<UserData> premiumUsers = [];
+    final url = Uri.parse('$mainUrl/allPremiums');
+    final response = await http.get(url, headers: {
+      'usertype': 'vendor',
+      'Content-Type': 'application/json; charset=UTF-8',
+      'authorization': _token,
+    });
+    final responseData = json.decode(response.body) as List;
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      for (var i = 0; i < responseData.length; i++) {
+        final user = UserData(
+          id: responseData[i]['_id'],
+          name: responseData[i]['name'],
+          number: responseData[i]['number'],
+        );
+        premiumUsers.add(user);
+      }
+      return premiumUsers;
     } else
       throw response.body;
   }

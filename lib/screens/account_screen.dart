@@ -1,4 +1,5 @@
 import 'package:adminpanel/widgets/add_copon.dart';
+import 'package:adminpanel/widgets/signup_delivery_form.dart';
 import 'package:adminpanel/widgets/web_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,7 @@ class _AccountScreenState extends State<AccountScreen> {
           ),
           Expanded(
             flex: 5,
-            child: AddCopon(),
+            child: SignupDeliveryForm(),
           ),
         ],
       ),
