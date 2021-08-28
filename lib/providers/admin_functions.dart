@@ -42,6 +42,7 @@ class AdminFunctioins with ChangeNotifier {
 
   Future<void> createDelivery(
       String name, String email, String password, String number) async {
+
     final url = Uri.parse('$mainUrl/delivaryUser');
     final response = await http.post(url,
         headers: {

@@ -33,7 +33,6 @@ class _AddCoponState extends State<AddCopon> {
         Container(
           margin: const EdgeInsets.all(15),
           child: Form(
-            
             key: key,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -41,10 +40,12 @@ class _AddCoponState extends State<AddCopon> {
                 Container(
                   constraints: BoxConstraints(maxWidth: 200),
                   child: TextFormField(
-                    decoration: InputDecoration(labelText: 'Discount Percentage'),
+                    decoration:
+                        InputDecoration(labelText: 'Discount Percentage'),
                     validator: (value) {
                       if (value.isEmpty) return "Enter Discount Percentage";
-                      if (double.tryParse(value) == null) return "must be a number";
+                      if (double.tryParse(value) == null)
+                        return "must be a number";
                       if (double.parse(value) > 100 || double.parse(value) < 0)
                         return "Invalid Percentage";
                       return null;
@@ -60,7 +61,8 @@ class _AddCoponState extends State<AddCopon> {
                     decoration: InputDecoration(labelText: 'Valid for (days)'),
                     validator: (value) {
                       if (value.isEmpty) return "Enter Period";
-                      if (int.tryParse(value) == null) return "must be a number";
+                      if (int.tryParse(value) == null)
+                        return "must be a number";
                       return null;
                     },
                     onSaved: (value) {
@@ -76,8 +78,12 @@ class _AddCoponState extends State<AddCopon> {
             ),
           ),
         ),
-
-        if (code != '') Center(child: Text('code: $code',style: TextStyle(fontSize: 18),)),
+        if (code != '')
+          Center(
+              child: Text(
+            'code: $code',
+            style: TextStyle(fontSize: 18),
+          )),
       ],
     );
   }
