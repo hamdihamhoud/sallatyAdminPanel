@@ -1,4 +1,5 @@
 import 'package:adminpanel/providers/orders.dart';
+import 'package:adminpanel/screens/orders_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -55,6 +56,8 @@ class OrderItem extends StatelessWidget {
                   onTap: () => {
                     ordersProvider
                         .deleteOrderItemFromOrder(orders[i].products[index].id),
+                    Navigator.of(context)
+                        .pushReplacementNamed(OrdersScreen.routeName),
                   },
                 ),
               ),

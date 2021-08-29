@@ -1,5 +1,6 @@
 import 'package:adminpanel/models/user_data.dart';
 import 'package:adminpanel/providers/admin_functions.dart';
+import 'package:adminpanel/widgets/create_premium.dart';
 import 'package:adminpanel/widgets/web_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -32,7 +33,7 @@ class _VendorsScreenState extends State<VendorsScreen> {
           Expanded(
             flex: 5,
             child: FutureBuilder(
-              future: adminProvider.getAllDeliveryAccounts(),
+              future: adminProvider.getAllPremiumAccounts(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting)
                   return Center(child: CircularProgressIndicator());
@@ -43,84 +44,56 @@ class _VendorsScreenState extends State<VendorsScreen> {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(20),
-                        child: Slidable(
-                          actionPane: SlidableDrawerActionPane(),
-                          actionExtentRatio: 0.05,
-                          secondaryActions: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                left: 5,
+                        child: Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
                               ),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(10),
+                              border: Border.all(
+                                width: 2,
+                                color: theme.accentColor,
+                              )),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "Name: ",
+                                    style: TextStyle(
+                                      color: theme.primaryColor,
+                                      fontSize: 19,
+                                    ),
                                   ),
-                                ),
-                                clipBehavior: Clip.hardEdge,
-                                child: IconSlideAction(
-                                  caption: 'Delete',
-                                  color: Colors.red,
-                                  icon: Icons.delete,
-                                  onTap: () => {
-                                    /*   adminProvider
-                                        .deleteDelivery(vendors[index].id), */
-                                  },
-                                ),
+                                  Text(
+                                    vendors[index].name,
+                                    style: TextStyle(
+                                      color: Color(0xFF333333),
+                                      fontSize: 19,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                          child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(15),
-                                ),
-                                border: Border.all(
-                                  width: 2,
-                                  color: theme.accentColor,
-                                )),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Name: ",
-                                      style: TextStyle(
-                                        color: theme.primaryColor,
-                                        fontSize: 19,
-                                      ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Number: ",
+                                    style: TextStyle(
+                                      color: theme.primaryColor,
+                                      fontSize: 19,
                                     ),
-                                    Text(
-                                      vendors[index].name,
-                                      style: TextStyle(
-                                        color: Color(0xFF333333),
-                                        fontSize: 19,
-                                      ),
+                                  ),
+                                  Text(
+                                    vendors[index].number,
+                                    style: TextStyle(
+                                      color: Color(0xFF333333),
+                                      fontSize: 19,
                                     ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Number: ",
-                                      style: TextStyle(
-                                        color: theme.primaryColor,
-                                        fontSize: 19,
-                                      ),
-                                    ),
-                                    Text(
-                                      vendors[index].number,
-                                      style: TextStyle(
-                                        color: Color(0xFF333333),
-                                        fontSize: 19,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       );
@@ -128,13 +101,31 @@ class _VendorsScreenState extends State<VendorsScreen> {
                   );
                 } else {
                   return Center(
-                    child: Text("There is no delivery accounts"),
+                    child: Text("There is no vendors accounts"),
                   );
                 }
               },
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Center(
+          child: Icon(
+            Icons.add,
+            color: Color(0xFF333333),
+          ),
+        ),
+        backgroundColor: theme.primaryColor,
+        tooltip: 'Add New premium Account',
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: CreatePremium(),
+            ),
+          );
+        },
       ),
     );
   }

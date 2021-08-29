@@ -1,9 +1,11 @@
+import 'package:adminpanel/providers/auth.dart';
 import 'package:adminpanel/screens/account_screen.dart';
 import 'package:adminpanel/screens/feedback_screen.dart';
 import 'package:adminpanel/screens/orders_screen.dart';
 import 'package:adminpanel/screens/delivery_screen.dart';
 import 'package:adminpanel/screens/vendors_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WebDrawer extends StatefulWidget {
   final int selectedIndex;
@@ -91,11 +93,9 @@ class _WebDrawerState extends State<WebDrawer> {
             selected: selectedIndex == 5 ? true : false,
             leading: Icon(Icons.logout),
             title: Text('Log out'),
-            onTap: () {
-              setState(() {
-                selectedIndex = 5;
-              });
-              Navigator.pushReplacementNamed(context, AccountScreen.routeName);
+            onTap: () async {
+              await Provider.of<AuthProvider>(context, listen: false).logout();
+              Navigator.pushReplacementNamed(context, '/');
             },
           ),
         ],

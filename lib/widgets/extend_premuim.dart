@@ -1,20 +1,17 @@
 import 'package:adminpanel/providers/admin_functions.dart';
-import 'package:adminpanel/screens/delivery_screen.dart';
+import 'package:adminpanel/screens/vendors_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SignupDeliveryForm extends StatefulWidget {
+class ExtendPremium extends StatefulWidget {
   @override
-  _SignupDeliveryFormState createState() => _SignupDeliveryFormState();
+  _ExtendPremiumState createState() => _ExtendPremiumState();
 }
 
-class _SignupDeliveryFormState extends State<SignupDeliveryForm> {
+class _ExtendPremiumState extends State<ExtendPremium> {
   final _key = GlobalKey<FormState>();
-  String name = '';
-  String password = '';
   String email = '';
-  String number = '';
-  final _passwordController = TextEditingController();
+  int years;
   bool _isLoading = false;
 
   bool isNumeric(String s) {
@@ -54,12 +51,8 @@ class _SignupDeliveryFormState extends State<SignupDeliveryForm> {
       _isLoading = true;
     });
     try {
-      await Provider.of<AdminFunctioins>(context, listen: false).createDelivery(
-        name,
-        email,
-        password,
-        number,
-      );
+      await Provider.of<AdminFunctioins>(context, listen: false)
+          .extendPremium(email, years);
     } catch (error) {
       _showErrorDialog(error);
     }
@@ -67,7 +60,7 @@ class _SignupDeliveryFormState extends State<SignupDeliveryForm> {
     setState(() {
       _isLoading = false;
     });
-    Navigator.of(context).pushReplacementNamed(DeliveryScreen.routeName);
+    Navigator.of(context).pushReplacementNamed(VendorsScreen.routeName);
   }
 
   @override
@@ -77,39 +70,6 @@ class _SignupDeliveryFormState extends State<SignupDeliveryForm> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Username'),
-                validator: (value) {
-                  if (value.isEmpty) return "This can't be empty!";
-                  if (isNumeric(value)) return "This can't be a number!";
-                  return null;
-                },
-                onSaved: (value) {
-                  name = value;
-                },
-              ),
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Password'),
-                obscureText: true,
-                controller: _passwordController,
-                validator: (value) {
-                  if (value.isEmpty || value.length < 5)
-                    return 'Password is too short!';
-                  return null;
-                },
-                onSaved: (value) {
-                  password = value;
-                },
-              ),
-              TextFormField(
-                  decoration:
-                      const InputDecoration(labelText: 'Confirm Password'),
-                  obscureText: true,
-                  validator: (value) {
-                    if (value != _passwordController.text)
-                      return 'Passwords do not match!';
-                    return null;
-                  }),
               TextFormField(
                 decoration: const InputDecoration(labelText: 'E-Mail'),
                 keyboardType: TextInputType.emailAddress,
@@ -124,24 +84,22 @@ class _SignupDeliveryFormState extends State<SignupDeliveryForm> {
               ),
               TextFormField(
                 decoration: const InputDecoration(
-                  prefix: Text('09'),
-                  labelText: 'Phone Number',
+                  labelText: 'Yeras',
                 ),
                 validator: (value) {
                   if (value.isEmpty) return "This can't be empty!";
-                  if (value.length != 8 || !isNumeric(value))
-                    return "Invalid Phone Number";
+                  if (!isNumeric(value)) return "Invalid Number";
                   return null;
                 },
                 onSaved: (value) {
-                  number = '09' + value;
+                  years = int.parse(value);
                 },
               ),
               _isLoading
                   ? Center(child: CircularProgressIndicator())
                   : TextButton(
                       onPressed: _submit,
-                      child: Text("Create"),
+                      child: Text("Extend"),
                     )
             ],
           ),

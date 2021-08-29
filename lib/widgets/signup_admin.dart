@@ -1,14 +1,15 @@
 import 'package:adminpanel/providers/admin_functions.dart';
+import 'package:adminpanel/screens/account_screen.dart';
 import 'package:adminpanel/screens/delivery_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SignupDeliveryForm extends StatefulWidget {
+class SignupAdminForm extends StatefulWidget {
   @override
-  _SignupDeliveryFormState createState() => _SignupDeliveryFormState();
+  _SignupAdminFormState createState() => _SignupAdminFormState();
 }
 
-class _SignupDeliveryFormState extends State<SignupDeliveryForm> {
+class _SignupAdminFormState extends State<SignupAdminForm> {
   final _key = GlobalKey<FormState>();
   String name = '';
   String password = '';
@@ -54,7 +55,7 @@ class _SignupDeliveryFormState extends State<SignupDeliveryForm> {
       _isLoading = true;
     });
     try {
-      await Provider.of<AdminFunctioins>(context, listen: false).createDelivery(
+      await Provider.of<AdminFunctioins>(context, listen: false).createAdmin(
         name,
         email,
         password,
@@ -67,7 +68,7 @@ class _SignupDeliveryFormState extends State<SignupDeliveryForm> {
     setState(() {
       _isLoading = false;
     });
-    Navigator.of(context).pushReplacementNamed(DeliveryScreen.routeName);
+    Navigator.of(context).pushReplacementNamed(AccountScreen.routeName);
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:adminpanel/models/user_data.dart';
 import 'package:adminpanel/providers/admin_functions.dart';
+import 'package:adminpanel/widgets/signup_delivery_form.dart';
 import 'package:adminpanel/widgets/web_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -65,6 +66,8 @@ class _DeliveryScreenState extends State<DeliveryScreen> {
                                   onTap: () => {
                                     adminProvider
                                         .deleteDelivery(delivrys[index].id),
+                                    Navigator.pushReplacementNamed(
+                                        context, DeliveryScreen.routeName),
                                   },
                                 ),
                               ),
@@ -148,11 +151,9 @@ class _DeliveryScreenState extends State<DeliveryScreen> {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (context) {
-              return AlertDialog(
-                content: Container(), /////////// la tzwaed
-              );
-            },
+            builder: (context) => AlertDialog(
+              content: SignupDeliveryForm(),
+            ),
           );
         },
       ),
